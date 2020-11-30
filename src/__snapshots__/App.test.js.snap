@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given component App Then it should match snapshot output 1`] = `
+"<div className=\\"App\\">
+  <header className=\\"App-header\\">
+    <p>
+      Edit 
+      <code>
+        src/App.js
+      </code>
+       and save to reload.
+    </p>
+    <WithStyles(ForwardRef(Button)) variant=\\"contained\\" color=\\"primary\\">
+      Hello World
+    </WithStyles(ForwardRef(Button))>
+    <a className=\\"App-link\\" href=\\"https://reactjs.org\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\">
+      Learn React
+    </a>
+  </header>
+</div>"
+`;

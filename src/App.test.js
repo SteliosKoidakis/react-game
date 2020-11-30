@@ -1,8 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { shallow } from 'enzyme';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Given component App', () => {
+  let component;
+
+  beforeEach(() => {
+    component = shallow(<App />);
+  });
+  // TODO: remove test configuration examples
+  it('Then it should be defined', () => {
+    expect(component).toBeDefined();
+  });
+  it('Then it should match snapshot output', () => {
+    expect(component.debug()).toMatchSnapshot();
+  });
 });

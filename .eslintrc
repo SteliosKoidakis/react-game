@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "settings": {
+    "react": {
+      "version": "17.0.1"
+    }
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "plugins": [
+    "react",
+    "jest"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "airbnb-base"
+  ],
+  "rules": {
+    "react/jsx-indent": [2, 2],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+  }
+}
