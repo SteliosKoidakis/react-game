@@ -8,7 +8,7 @@ exports[`Given component App Then it should match snapshot output 1`] = `
     </p>
   </header>
   <main>
-    <MemoryGameView />
+    <MemoryGameView url=\\"https://api.github.com/repos/facebook/react/contributors?\\" cardNumbers={6} />
   </main>
 </div>"
 `;

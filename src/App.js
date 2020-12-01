@@ -1,5 +1,6 @@
 import React from 'react';
-import { MemoryGameView } from 'views';
+import { MemoryGameView } from 'src/views';
+import { API_URL, CARD_NUMBERS } from 'src/constants';
 import './App.scss';
 
 function App() {
@@ -11,7 +12,10 @@ function App() {
         </p>
       </header>
       <main>
-        <MemoryGameView />
+        <MemoryGameView
+          url={API_URL}
+          cardNumbers={CARD_NUMBERS}
+        />
       </main>
     </div>
   );
