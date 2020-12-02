@@ -1,0 +1,17 @@
+.ModalComponent {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  
+  &__modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid grey;
+    width: 400px;
+    padding: 20px;
+  }
+}

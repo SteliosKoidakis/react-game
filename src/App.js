@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container } from '@material-ui/core';
 import { MemoryGameView } from 'src/views';
 import { API_URL, CARD_NUMBERS } from 'src/constants';
 import './App.scss';
@@ -6,17 +7,17 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <Container component="header">
         <p>
           Github Memory
         </p>
-      </header>
-      <main>
+      </Container>
+      <Container component="main">
         <MemoryGameView
           url={API_URL}
           cardNumbers={CARD_NUMBERS}
         />
-      </main>
+      </Container>
     </div>
   );
 }
