@@ -10,33 +10,28 @@ import {
 import './MemoryGameView.scss';
 
 // TODO: think about match number to be a constant
-const MemoryGameView = ({ url, cardNumbers }) => {
+const MemoryGameView = ({
+  url,
+  cardNumbers,
+  cardPoints,
+  delay,
+  timeLimit,
+}) => {
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
   const [isDisabled, setDisabled] = useState(false);
-  const [isWin, setWon] = useState(false);
-  const [isLoose, setLoose] = useState(false);
-  const [score, setScore] = useState(0);
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(timeLimit);
   const [contributors, isLoading] = useHttp(url);
 
-  useEffect(() => {
-    if (counter === 0 && !isWin) {
-      setLoose(true);
-      setDisabled(true);
-    }
-    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer);
-  }, [counter]);
+  const score = (matchedCards.length / 2) * cardPoints;
+  const isWin = score === cardNumbers * cardPoints;
+  const isLost = counter === 0;
 
   useEffect(() => {
-    if (score === cardNumbers * 100) {
-      setWon(true);
-      setDisabled(true);
-      setCounter(0);
-    }
-  }, [score]);
+    const timer = counter && !isWin > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
 
   useEffect(() => {
     const sortedContributorsList = sortRandomItems(contributors, cardNumbers);
@@ -44,7 +39,7 @@ const MemoryGameView = ({ url, cardNumbers }) => {
     const shuffledCards = shuffle(generatedCards);
 
     setCards(shuffledCards);
-  }, [contributors]);
+  }, [contributors, isWin, isLost]);
 
   const onFlippSecondCard = (uuid) => {
     if (flippedCards.length !== 1) return;
@@ -52,10 +47,9 @@ const MemoryGameView = ({ url, cardNumbers }) => {
     setFlippedCard([flippedCards[0], uuid]);
 
     if (isMatch(uuid, cards, flippedCards)) {
-      setScore(score + 100);
-      setTimeout(() => setMatchedCards([...matchedCards, flippedCards[0], uuid]), 500);
+      setTimeout(() => setMatchedCards([...matchedCards, flippedCards[0], uuid]), delay);
     }
-    setTimeout(() => setFlippedCard([]), 1000);
+    setTimeout(() => setFlippedCard([]), delay);
   };
 
   const onClickCard = (uuid) => {
@@ -73,10 +67,7 @@ const MemoryGameView = ({ url, cardNumbers }) => {
   };
 
   const restartGame = () => {
-    setCounter(60);
-    setLoose(false);
-    setScore(0);
-    setWon(false);
+    setCounter(timeLimit);
     setFlippedCard([]);
     setMatchedCards([]);
     setDisabled(false);
@@ -106,7 +97,7 @@ const MemoryGameView = ({ url, cardNumbers }) => {
       <ModalComponent
         title={isWin ? 'YOU WON!' : 'GAME OVER' }
         score={score}
-        isOpen={isWin || isLoose}
+        isOpen={isWin || isLost}
         onClickActionButton={ () => restartGame()}
       />
     </Grid>
@@ -116,6 +107,9 @@ const MemoryGameView = ({ url, cardNumbers }) => {
 MemoryGameView.propTypes = {
   url: PropTypes.string,
   cardNumbers: PropTypes.number,
+  cardPoints: PropTypes.number,
+  timeLimit: PropTypes.number,
+  delay: PropTypes.number,
 };
 
 export default MemoryGameView;
