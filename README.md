@@ -4,7 +4,7 @@
 - React
 - Sass
 - Eslint
-- Enzyme & Jest
+- React testing library & Jest
 - Prop types
 - MaterialUi
 

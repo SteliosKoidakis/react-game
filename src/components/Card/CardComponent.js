@@ -3,27 +3,37 @@ import PropTypes from 'prop-types';
 import { Card, CardMedia, Fade } from '@material-ui/core';
 import './CardComponent.scss';
 
+const classMediaName = 'CardComponent__media';
+
 const CardComponent = ({
   title = '',
   imageUrl = '',
-  isFlipped = false, // eslint-disable-line
+  isFlipped = false,
   isMatched = false,
   onClickCard,
 }) => {
   if (isMatched) {
-    return <div className='CardComponent__media'></div>;
+    return (
+      <div
+        className={classMediaName}
+        data-testid="card--matched"
+      />
+    );
   }
 
   return (
     <Card
       onClick={isMatched ? null : onClickCard}
       variant="outlined"
+      data-testid="card"
+      className="CardComponent"
     >
       <Fade in={isFlipped}>
         <CardMedia
           image={imageUrl}
           title={title}
-           className='CardComponent__media'
+          className={classMediaName}
+          data-testid={`card-media${isFlipped ? '--flipped' : ''}`}
         />
       </Fade>
     </Card>

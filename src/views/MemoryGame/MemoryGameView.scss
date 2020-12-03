@@ -1,0 +1,15 @@
+.MemoryGameView {
+
+  &__cards-wrapper {
+    padding-top: 50px;
+  }
+
+  &__footer {
+    padding: 50px 10px 0 10px;
+
+    @media (min-width: 600px) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

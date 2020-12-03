@@ -13,20 +13,21 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
-      <Container component="header">
+      <Container
+        component="header"
+        className="App__header"
+      >
         <p>
           Github Memory
         </p>
       </Container>
-      <Container component="main">
-        <MemoryGameView
-          url={API_URL}
-          cardNumbers={CARD_NUMBERS}
-          cardPoints={CARD_POINTS}
-          timeLimit={TIME_LIMIT}
-          delay={DELAY}
-        />
-      </Container>
+      <MemoryGameView
+        url={API_URL}
+        cardNumbers={CARD_NUMBERS}
+        cardPoints={CARD_POINTS}
+        timeLimit={TIME_LIMIT}
+        delay={DELAY}
+      />
     </div>
   );
 }

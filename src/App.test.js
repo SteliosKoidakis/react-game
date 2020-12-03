@@ -1,18 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+
 import App from './App';
 
 describe('Given component App', () => {
-  let component;
+  describe('When is been called', () => {
+    it('Then it should render MemoryGameView component', () => {
+      const { getByTestId } = render(<App />);
 
-  beforeEach(() => {
-    component = shallow(<App />);
-  });
-  // TODO: remove test configuration examples
-  it('Then it should be defined', () => {
-    expect(component).toBeDefined();
-  });
-  it('Then it should match snapshot output', () => {
-    expect(component.debug()).toMatchSnapshot();
+      expect(getByTestId('memoryGameView')).toBeInTheDocument();
+    });
   });
 });
