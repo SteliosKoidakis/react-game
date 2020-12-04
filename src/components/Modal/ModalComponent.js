@@ -4,23 +4,33 @@ import { Modal, Button } from '@material-ui/core';
 import './ModalComponent.scss';
 
 const ModalComponent = ({
-  onClickActionButton,
-  score = 0,
+  onClickActionButton = () => ({}),
+  text = '',
   isOpen = false,
-  title = false,
+  title = '',
 }) => (
   <Modal
     open={isOpen}
     aria-labelledby={title}
     className="ModalComponent"
+    data-testid="modal"
   >
     <div className="ModalComponent__modal-content">
-      <h2> {title}</h2>
-      <p>Score: {score}</p>
+      <h2
+        data-testid="modal-title"
+      >
+        {title}
+      </h2>
+      <p
+        data-testid="modal-text"
+      >
+        {text}
+      </p>
       <Button
         variant="contained"
         color="primary"
         onClick={onClickActionButton}
+        data-testid="modal-button"
       >
         New game!
       </Button>
@@ -30,7 +40,7 @@ const ModalComponent = ({
 
 ModalComponent.propTypes = {
   onClickActionButton: PropTypes.func,
-  score: PropTypes.number,
+  text: PropTypes.string,
   isOpen: PropTypes.bool,
   title: PropTypes.string,
 };

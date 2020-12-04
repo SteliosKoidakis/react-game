@@ -1,4 +1,23 @@
-import { shuffle, generateCards, isEmptyFalsyArray } from './index';
+import {
+  shuffle,
+  generateCards,
+  isEmptyFalsyArray,
+  isMatch,
+  sortRandomItems,
+} from './index';
+
+const mockedArrayItems = [
+  {
+    login: 'login1',
+    avatar_url: 'avatar_url1',
+    id: 123,
+  },
+  {
+    login: 'login2',
+    avatar_url: 'avatar_url2',
+    id: 43,
+  },
+];
 
 describe('Given utilities functions', () => {
   describe('Given shuffle function', () => {
@@ -27,9 +46,12 @@ describe('Given utilities functions', () => {
       });
     });
     describe('When an array with items is passed', () => {
-      it.skip('Then it should return a new array with id and name properties', () => {
-      });
-      it.skip('And the id of any item should be unique', () => {
+      it('Then it should return a new array with id, avatarUrl, uuid and name properties', () => {
+        const result = generateCards(mockedArrayItems);
+        expect(result.some((item) => !item.name
+          || !item.avatarUrl
+          || !item.id
+          || !item.uuid)).toBeFalsy();
       });
     });
   });
@@ -50,13 +72,49 @@ describe('Given utilities functions', () => {
       });
     });
   });
-  describe('Given sortRandomItems', () => {
-    describe('When is called', () => {
-      it.skip('Then it should return a sorted array randomly', () => {
+  describe('Given sortRandomItems function', () => {
+    describe('When is called with arrayItems and a limit', () => {
+      it('Then it should return a sorted array randomly with the correct limit', () => {
+        const array = [1, 2, 3];
+        const result = sortRandomItems(array, 2);
+
+        expect(result).not.toStrictEqual(array);
+        expect(result).toHaveLength(2);
       });
     });
     describe('When is called with an empty array or another type of param', () => {
-      it.skip('Then it should return an empty array', () => {
+      it('Then it should return an empty array', () => {
+        let result = sortRandomItems([]);
+        expect(result).toStrictEqual([]);
+        result = sortRandomItems(null);
+        expect(result).toStrictEqual([]);
+      });
+    });
+  });
+  describe('Given isMatch function', () => {
+    const cards = [
+      {
+        uuid: 1,
+        name: 'test1',
+      },
+      {
+        uuid: 2,
+        name: 'test2',
+      },
+    ];
+    const flippedCards = [1];
+    describe('When is called with uuid same with the one from the flippedCards', () => {
+      it('Then it should return true', () => {
+        const result = isMatch(1, cards, flippedCards);
+
+        expect(result).toBeTruthy();
+      });
+    });
+    describe('When is called with an unexpected parameter', () => {
+      it('Then it should return false', () => {
+        const result = isMatch(1, [], {});
+
+        expect(result).toBeFalsy();
       });
     });
   });

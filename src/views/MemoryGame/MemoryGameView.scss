@@ -2,6 +2,10 @@
 
   &__cards-wrapper {
     padding-top: 50px;
+
+    &--disabled {
+      pointer-events: none;
+    }
   }
 
   &__footer {

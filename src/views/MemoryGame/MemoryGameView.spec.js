@@ -97,7 +97,7 @@ describe('Given component MemoryGameView', () => {
       it('Then should render a card media content', async () => {
         useHttp.mockReturnValue([mockUserHttpResponse, false]);
         const { queryAllByTestId, getByText } = render(
-          <MemoryGameView cardNumbers={6} url={url} />,
+          <MemoryGameView cardNumbers={6} url={url}/>,
         );
         const node = await queryAllByTestId('card');
 
@@ -107,8 +107,8 @@ describe('Given component MemoryGameView', () => {
         expect(await queryAllByTestId('card-media--flipped').length).toBe(1);
       });
     });
-    describe('When 2 cards are clicked', () => {
-      it('Then should add 100 points when there is a match and card--matched element should exist', async () => {
+    describe('When 2 same cards are clicked', () => {
+      it('Then should add 100 points when there is a match and card--matched element should exist 2 times', async () => {
         jest.useFakeTimers();
         useHttp.mockReturnValue([mockUserHttpResponse, false]);
         const {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHttp } from 'src/hooks';
 import { CardComponent, ModalComponent } from 'src/components';
@@ -9,7 +9,6 @@ import {
 
 import './MemoryGameView.scss';
 
-// TODO: think about match number to be a constant
 const MemoryGameView = ({
   url,
   cardNumbers = 100,
@@ -52,9 +51,8 @@ const MemoryGameView = ({
     setTimeout(() => setFlippedCard([]), delay);
   };
 
-  const onClickCard = (uuid) => {
+  const onClickCard = useCallback((uuid) => {
     if (!uuid || flippedCards.includes(uuid)) return;
-
     setDisabled(true);
 
     if (flippedCards.length === 0) {
@@ -64,12 +62,12 @@ const MemoryGameView = ({
     }
     onFlippSecondCard(uuid);
     setDisabled(false);
-  };
+  }, [flippedCards]);
 
-  const startGame = () => {
-    setCounter(timeLimit);
+  const restartGame = () => {
     setFlippedCard([]);
     setMatchedCards([]);
+    setCounter(timeLimit);
     setDisabled(false);
   };
 
@@ -82,7 +80,12 @@ const MemoryGameView = ({
         <Grid
           container
           spacing={3}
-          className="MemoryGameView__cards-wrapper"
+          className={
+            `MemoryGameView__cards-wrapper 
+            ${isDisabled
+              ? ' MemoryGameView__cards-wrapper--disabled'
+              : null
+            }`}
         >
           {!isLoading && cards.map(({
             uuid, name, avatarUrl,
@@ -91,9 +94,10 @@ const MemoryGameView = ({
               <CardComponent
                 title={name}
                 imageUrl={avatarUrl}
+                uuid={uuid}
                 isFlipped={flippedCards.includes(uuid)}
                 isMatched={matchedCards.includes(uuid)}
-                onClickCard={() => !isDisabled && onClickCard(uuid)}
+                onClickCard={onClickCard}
               />
             </Grid>
           ))}
@@ -106,7 +110,7 @@ const MemoryGameView = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={startGame}
+          onClick={restartGame}
         >
           Start Game
         </Button>
@@ -114,9 +118,9 @@ const MemoryGameView = ({
       </footer>
       <ModalComponent
         title={isWin ? 'YOU WON!' : 'GAME OVER' }
-        score={score}
+        text={`Score: ${score}`}
         isOpen={isWin || isLost}
-        onClickActionButton={ () => startGame()}
+        onClickActionButton={ () => restartGame()}
       />
     </main>
   );

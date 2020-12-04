@@ -52,8 +52,9 @@ const sortRandomItems = (arrayItems, limit) => {
     .slice(0, limit);
 };
 
-// TODO: write unit test
 const isMatch = (uuid, cards, flippedCards) => {
+  if (isEmptyFalsyArray(flippedCards) || isEmptyFalsyArray(cards)) return false;
+
   const clickedCard = cards.find((card) => card.uuid === uuid);
   const flippedCard = cards.find((card) => flippedCards[0] === card.uuid);
 
