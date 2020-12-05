@@ -3,7 +3,7 @@ import { render, fireEvent, within } from '@testing-library/react';
 
 import ModalComponent from './ModalComponent';
 
-describe('Given component ModalComponent', () => {
+describe('Given ModalComponent', () => {
   describe('When isOpen property is true', () => {
     it('Then it should render modal element', () => {
       const { getByTestId } = render(
@@ -41,7 +41,7 @@ describe('Given component ModalComponent', () => {
     });
   });
   describe('When modal-button element is clicked', () => {
-    it('Then it should trigger onClickActionButton function', async () => {
+    it('Then it should trigger onClickActionButton function', () => {
       const onClickActionButton = jest.fn();
       const { queryByTestId } = render(
         <ModalComponent

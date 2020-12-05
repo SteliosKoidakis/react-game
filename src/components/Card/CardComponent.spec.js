@@ -3,9 +3,9 @@ import { render, fireEvent } from '@testing-library/react';
 
 import CardComponent from './CardComponent';
 
-describe('Given component CardComponent', () => {
+describe('Given CardComponent', () => {
   describe('When isMatched property is true', () => {
-    it('Then it should render card--matched element', async () => {
+    it('Then it should render card--matched element', () => {
       const { getByTestId } = render(
         <CardComponent isMatched={true} imageUrl="test"/>,
       );
@@ -14,7 +14,7 @@ describe('Given component CardComponent', () => {
     });
   });
   describe('When isFlipped property is true', () => {
-    it('Then it should render card--matched element', async () => {
+    it('Then it should render card-media--flipped element', () => {
       const { getByTestId } = render(
         <CardComponent isFlipped={true} imageUrl ="test"/>,
       );
@@ -22,8 +22,8 @@ describe('Given component CardComponent', () => {
       expect(getByTestId('card-media--flipped')).toBeInTheDocument();
     });
   });
-  describe('When isMatched is false and isFlipped is false', () => {
-    it('Then it should render card-media element', async () => {
+  describe('When isMatched and isFlipped are falsy', () => {
+    it('Then it should render card-media element', () => {
       const { queryByTestId } = render(
         <CardComponent
           isFlipped={false}
@@ -35,8 +35,8 @@ describe('Given component CardComponent', () => {
       expect(queryByTestId('card-media')).toBeInTheDocument();
     });
   });
-  describe('When isMatched is false and trigger click in the component', () => {
-    it('Then it should trigger onClickCard function', async () => {
+  describe('When isMatched is false and has been triggered click event in the component', () => {
+    it('Then it should trigger onClickCard function', () => {
       const onClickCard = jest.fn();
       const { queryByTestId } = render(
         <CardComponent

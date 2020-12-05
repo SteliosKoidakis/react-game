@@ -52,13 +52,13 @@ const sortRandomItems = (arrayItems, limit) => {
     .slice(0, limit);
 };
 
-const isMatch = (uuid, cards, flippedCards) => {
-  if (isEmptyFalsyArray(flippedCards) || isEmptyFalsyArray(cards)) return false;
+const isMatch = (uuid, items, clickedItems) => {
+  if (isEmptyFalsyArray(clickedItems) || isEmptyFalsyArray(items)) return false;
 
-  const clickedCard = cards.find((card) => card.uuid === uuid);
-  const flippedCard = cards.find((card) => flippedCards[0] === card.uuid);
+  const clickedItem = items.find((card) => card.uuid === uuid);
+  const flippedItem = items.find((card) => clickedItems[0] === card.uuid);
 
-  return clickedCard.name === flippedCard.name;
+  return clickedItem.name === flippedItem.name;
 };
 
 export {

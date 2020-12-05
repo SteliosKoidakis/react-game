@@ -1,20 +1,32 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Container, Grid } from '@material-ui/core';
+
 import { useHttp } from 'src/hooks';
 import { CardComponent, ModalComponent } from 'src/components';
-import { Button, Container, Grid } from '@material-ui/core';
 import {
-  isMatch, sortRandomItems, shuffle, generateCards,
+  isMatch,
+  sortRandomItems,
+  shuffle,
+  generateCards,
 } from 'src/utils';
+import {
+  CARD_NUMBER,
+  CARD_POINTS,
+  DELAY,
+  TIME_LIMIT,
+} from 'src/constants';
 
 import './MemoryGameView.scss';
 
+const className = 'MemoryGameView';
+
 const MemoryGameView = ({
-  url,
-  cardNumbers = 100,
-  cardPoints,
-  delay,
-  timeLimit,
+  url = '',
+  cardNumber = CARD_NUMBER,
+  cardPoints = CARD_POINTS,
+  delay = DELAY,
+  timeLimit = TIME_LIMIT,
 }) => {
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCard] = useState([]);
@@ -24,7 +36,7 @@ const MemoryGameView = ({
   const [contributors, isLoading] = useHttp(url);
 
   const score = (matchedCards.length / 2) * cardPoints;
-  const isWin = score === cardNumbers * cardPoints;
+  const isWin = matchedCards.length / 2 === cardNumber;
   const isLost = counter === 0;
 
   useEffect(() => {
@@ -33,7 +45,8 @@ const MemoryGameView = ({
   }, [counter]);
 
   useEffect(() => {
-    const sortedContributorsList = sortRandomItems(contributors, cardNumbers);
+    setFlippedCard([]);
+    const sortedContributorsList = sortRandomItems(contributors, cardNumber);
     const generatedCards = generateCards(sortedContributorsList);
     const shuffledCards = shuffle(generatedCards);
 
@@ -73,7 +86,7 @@ const MemoryGameView = ({
 
   return (
     <main
-      className="MemoryGameView"
+      className={className}
       data-testid="memoryGameView"
     >
       <Container component="section">
@@ -81,9 +94,9 @@ const MemoryGameView = ({
           container
           spacing={3}
           className={
-            `MemoryGameView__cards-wrapper 
+            `${className}__cards-wrapper 
             ${isDisabled
-              ? ' MemoryGameView__cards-wrapper--disabled'
+              ? `${className}__cards-wrapper--disabled`
               : null
             }`}
         >
@@ -103,9 +116,11 @@ const MemoryGameView = ({
           ))}
         </Grid>
       </Container>
-      <footer className="MemoryGameView__footer">
+      <footer
+        className={`${className}__footer`}
+      >
         <p data-testid="counter">
-          Time: {counter || '60'} {counter < 10 ? 'second' : 'seconds'}
+          Time: {counter || timeLimit} {counter < 10 ? 'second' : 'seconds'}
         </p>
         <Button
           variant="contained"
@@ -127,10 +142,10 @@ const MemoryGameView = ({
 };
 
 MemoryGameView.propTypes = {
-  url: PropTypes.string,
-  cardNumbers: PropTypes.number,
-  cardPoints: PropTypes.number,
-  timeLimit: PropTypes.number,
+  url: PropTypes.string.isRequired,
+  cardNumber: PropTypes.number.isRequired,
+  cardPoints: PropTypes.number.isRequired,
+  timeLimit: PropTypes.number.isRequired,
   delay: PropTypes.number,
 };
 

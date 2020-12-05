@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import Axios, { get } from 'axios';
+import Axios from 'axios';
+
 import useHttp from './useHttp';
 
 jest.mock('axios', () => ({
@@ -15,7 +16,7 @@ describe('Given useHttp hook', () => {
     it('Then it should trigger get method with the passed url', async () => {
       await act(async () => renderHook(() => useHttp('url')));
 
-      expect(get).toHaveBeenCalledWith('url');
+      expect(Axios.get).toHaveBeenCalledWith('url');
     });
   });
   describe('And the http call is successful', () => {
@@ -31,7 +32,7 @@ describe('Given useHttp hook', () => {
       await act(async () => renderHook(() => useHttp()));
       await act(async () => renderHook(() => useHttp({})));
 
-      expect(get).toHaveBeenCalledTimes(0);
+      expect(Axios.get).toHaveBeenCalledTimes(0);
     });
   });
   describe('When is called and an error is catched', () => {

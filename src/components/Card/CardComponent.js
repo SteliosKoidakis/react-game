@@ -1,14 +1,15 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardMedia, Fade } from '@material-ui/core';
+
 import './CardComponent.scss';
 
-const classMediaName = 'CardComponent__media';
+const className = 'CardComponent';
 
 const CardComponent = ({
   title = '',
   imageUrl = '',
-  uuid,
+  uuid = 0,
   isFlipped = false,
   isMatched = false,
   onClickCard = () => ({}),
@@ -16,7 +17,7 @@ const CardComponent = ({
   if (isMatched) {
     return (
       <div
-        className={classMediaName}
+        className={className}
         data-testid="card--matched"
       />
     );
@@ -27,13 +28,13 @@ const CardComponent = ({
       onClick={() => onClickCard(uuid)}
       variant="outlined"
       data-testid="card"
-      className="CardComponent"
+      className={className}
     >
       <Fade in={isFlipped}>
         <CardMedia
           image={imageUrl}
           title={title}
-          className={classMediaName}
+          className={`${className}__media`}
           data-testid={`card-media${isFlipped ? '--flipped' : ''}`}
         />
       </Fade>

@@ -10,8 +10,6 @@ import MemoryGameView from './MemoryGameView';
 
 jest.mock('src/hooks');
 
-const url = 'url';
-
 const mockUserHttpResponse = [
   {
     login: 'test0',
@@ -43,6 +41,13 @@ const mockUserHttpResponse = [
   },
 ];
 
+const requiredProperties = {
+  cardNumber: 6,
+  cardPoints: 100,
+  timeLimit: 60,
+  url: 'url',
+};
+
 describe('Given component MemoryGameView', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -51,15 +56,15 @@ describe('Given component MemoryGameView', () => {
   describe('When is been called', () => {
     it('Then it should trigger useHttp hook with url parameter', () => {
       useHttp.mockReturnValue([[], false]);
-      render(<MemoryGameView url={url} />);
+      render(<MemoryGameView {...requiredProperties} />);
 
-      expect(useHttp).toHaveBeenCalledWith(url);
+      expect(useHttp).toHaveBeenCalledWith(requiredProperties.url);
     });
   });
   describe('And when useHttp return an array with items', () => {
-    it('Then it should render cardNumbers * 2 Cards components', async () => {
+    it('Then it should render cardNumber * 2 Cards components', async () => {
       useHttp.mockReturnValue([mockUserHttpResponse, false]);
-      const { findAllByTestId } = render(<MemoryGameView cardNumbers={6} url={url} />);
+      const { findAllByTestId } = render(<MemoryGameView {...requiredProperties} />);
 
       expect(await findAllByTestId('card')).toHaveLength(12);
     });
@@ -67,7 +72,7 @@ describe('Given component MemoryGameView', () => {
   describe('When isLoading property is true from useHttp hook', () => {
     it('Then it should not render any card component', async () => {
       useHttp.mockReturnValue([mockUserHttpResponse, true]);
-      const { queryByTestId } = render(<MemoryGameView cardNumbers={6} url={url} />);
+      const { queryByTestId } = render(<MemoryGameView {...requiredProperties} />);
 
       expect(await queryByTestId('card')).not.toBeInTheDocument();
     });
@@ -75,7 +80,9 @@ describe('Given component MemoryGameView', () => {
   describe('When click on Start game button', () => {
     it('Then timer should be 60 and score 0', async () => {
       useHttp.mockReturnValue([mockUserHttpResponse, false]);
-      const { getByTestId, getByText } = render(<MemoryGameView cardNumbers={6} url={url} />);
+      const { getByTestId, getByText } = render(
+        <MemoryGameView {...requiredProperties} />,
+      );
       fireEvent.click(getByText('Start Game'));
 
       expect(getByTestId('counter')).toHaveTextContent('60');
@@ -86,7 +93,7 @@ describe('Given component MemoryGameView', () => {
     it('Then should not render any card media content', async () => {
       useHttp.mockReturnValue([mockUserHttpResponse, false]);
       const { queryAllByTestId } = render(
-        <MemoryGameView cardNumbers={6} url={url} />,
+        <MemoryGameView {...requiredProperties} />,
       );
 
       expect(await queryAllByTestId('card-media--flipped').length).toBe(0);
@@ -97,7 +104,7 @@ describe('Given component MemoryGameView', () => {
       it('Then should render a card media content', async () => {
         useHttp.mockReturnValue([mockUserHttpResponse, false]);
         const { queryAllByTestId, getByText } = render(
-          <MemoryGameView cardNumbers={6} url={url}/>,
+          <MemoryGameView {...requiredProperties} />,
         );
         const node = await queryAllByTestId('card');
 
@@ -116,7 +123,7 @@ describe('Given component MemoryGameView', () => {
           getByText,
           getAllByTitle,
         } = render(
-          <MemoryGameView cardNumbers={6} url={url} delay={0}/>,
+          <MemoryGameView {...requiredProperties} delay={0}/>,
         );
         const node = await queryAllByTestId('card-media');
         const sameCards = getAllByTitle(node[0].title);

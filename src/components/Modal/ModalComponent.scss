@@ -1,6 +1,8 @@
+$ModalComponent-spacing: 20px;
+
 .ModalComponent {
   display: flex;
-  padding: 20px;
+  padding: $ModalComponent-spacing;
   align-items: center;
   justify-content: center;
   
@@ -12,6 +14,6 @@
     background-color: white;
     border: 2px solid grey;
     width: 400px;
-    padding: 20px;
+    padding: $ModalComponent-spacing;
   }
 }

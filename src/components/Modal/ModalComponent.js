@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from '@material-ui/core';
+
 import './ModalComponent.scss';
+
+const className = 'ModalComponent';
 
 const ModalComponent = ({
   onClickActionButton = () => ({}),
@@ -12,10 +15,12 @@ const ModalComponent = ({
   <Modal
     open={isOpen}
     aria-labelledby={title}
-    className="ModalComponent"
+    className={className}
     data-testid="modal"
   >
-    <div className="ModalComponent__modal-content">
+    <div
+        className={`${className}__modal-content`}
+      >
       <h2
         data-testid="modal-title"
       >
@@ -45,4 +50,4 @@ ModalComponent.propTypes = {
   title: PropTypes.string,
 };
 
-export default ModalComponent;
+export default memo(ModalComponent);

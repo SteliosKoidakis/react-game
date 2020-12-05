@@ -38,8 +38,8 @@ boolean
 | Parameters          | Description |
 |---------------|----------|
 | uuid         | Uuid of clicked card |
-| cards  | Cards array that are on the current game         |
-| flippedCards  | Array of flipped cards       |        
+| items  | Items array that are on the current game         |
+| clickedItems  | Array of clicked items       |        
 
 
 
@@ -49,7 +49,7 @@ boolean
 ```javascript
 import { sortRandomItems } from 'src/utils';
 
-const sortedContributorsList = sortRandomItems(contributors, cardNumbers);
+const sortedContributorsList = sortRandomItems(contributors, cardNumber);
 
 // Returns
 []

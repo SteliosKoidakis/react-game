@@ -5,7 +5,7 @@ A main source of constants which are been used across the project to avoid hard 
 ```javascript
 import {
   API_URL,
-  CARD_NUMBERS,
+  CARD_NUMBER,
   CARD_POINTS,
   DELAY,
   TIME_LIMIT,
@@ -18,7 +18,7 @@ import {
 | Name          | Type     | Description              |
 |---------------|----------|--------------------------|
 | API_URL         |`String` |  Url of api call to get the cards  |
-| CARD_NUMBERS  |`Number` |  Number of matched cards             |    
+| CARD_NUMBER  |`Number` |  Number of matched cards             |    
 | CARD_POINTS  |`Number` |  Number of points per match             |    
 | DELAY  |`Number` |  Delay on click card item           |    
 | TIME_LIMIT  |`Number` |  Time limit to play a round game            |    

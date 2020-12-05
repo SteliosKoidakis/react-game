@@ -1,13 +1,15 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
+
 import { MemoryGameView } from 'src/views';
 import {
   API_URL,
-  CARD_NUMBERS,
+  CARD_NUMBER,
   CARD_POINTS,
   DELAY,
   TIME_LIMIT,
 } from 'src/constants';
+
 import './App.scss';
 
 function App() {
@@ -17,13 +19,13 @@ function App() {
         component="header"
         className="App__header"
       >
-        <p>
+        <h1>
           Github Memory
-        </p>
+        </h1>
       </Container>
       <MemoryGameView
         url={API_URL}
-        cardNumbers={CARD_NUMBERS}
+        cardNumber={CARD_NUMBER}
         cardPoints={CARD_POINTS}
         timeLimit={TIME_LIMIT}
         delay={DELAY}

@@ -19,7 +19,7 @@ const mockedArrayItems = [
   },
 ];
 
-describe('Given utilities functions', () => {
+describe('Given utilities', () => {
   describe('Given shuffle function', () => {
     describe('When is called with an empty array or another type of param', () => {
       it('Then it should return an empty array', () => {
